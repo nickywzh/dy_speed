@@ -1,77 +1,23 @@
 /*
 
 软件名: ios/番茄小说
-
 作者: 执意Ariszy 修复@Origami Juvenile
-
 #点击签到获取Cookie,点击右下角开宝箱看一个视频获取headers
-
-
 #可以完成读书任务、广告视频、开宝箱、宝箱广告视频
-
-
 #⚠️因人而异，并非所有人可以完成广告视频和宝箱视频⚠️
-
-
 更新时间：2022.3.24
 1.解决广告视频只能提交两次
 2.新增开宝箱和宝箱广告视频
-
-
 更新时间：2022.3.26
 # 解决与宝箱任务频繁请求
 1.修改签到任务只在早上运行
 2.修改视频任务固定每小时只执行一次（宝箱视频不影响）
-
-
 [mitm]
 hostname = *.snssdk.com
-
 #圈x
 [rewrite local]
 luckycat/novel/v1/task/sign_in/* url script-request-header fqxs.js
-
 luckycat/novel/v1/task/done/excitation_ad_treasure_box/* url script-request-header fqxs.js
-
-
-
-
-
-#获取当前日期时间及其它操作汇总
-var myDate = new Date(); 
-myDate.getYear();    //获取当前年份(2位) 
-myDate.getFullYear();  //获取完整的年份(4位,1970-????) 
-myDate.getMonth();    //获取当前月份(0-11,0代表1月) 
-myDate.getDate();    //获取当前日(1-31) 
-myDate.getDay();     //获取当前星期X(0-6,0代表星期天) 
-myDate.getTime();    //获取当前时间(从1970.1.1开始的毫秒数) 
-myDate.getHours();    //获取当前小时数(0-23) 
-myDate.getMinutes();   //获取当前分钟数(0-59) 
-myDate.getSeconds();   //获取当前秒数(0-59) 
-myDate.getMilliseconds();  //获取当前毫秒数(0-999) 
-myDate.toLocaleDateString();   //获取当前日期 
-var mytime=myDate.toLocaleTimeString();   //获取当前时间 
-myDate.toLocaleString( );    //获取日期与时间 
-
-
-
-
-#日期时间脚本库方法列表
-Date.prototype.isLeapYear 判断闰年 
-Date.prototype.Format 日期格式化 
-Date.prototype.DateAdd 日期计算 
-Date.prototype.DateDiff 比较日期差 
-Date.prototype.toString 日期转字符串 
-Date.prototype.toArray 日期分割为数组 
-Date.prototype.DatePart 取日期的部分信息 
-Date.prototype.MaxDayOfDate 取日期所在月的最大天数 
-Date.prototype.WeekNumOfYear 判断日期所在年的第几周 
-StringToDate 字符串转日期型 
-IsValidDate 验证日期有效性 
-CheckDateTime 完整日期时间检查 
-daysBetween 日期天数差 
-
-
 */
 const $ = new Env('🍅番茄小说,填我邀请码【7526039278】')
 const notify = $.isNode() ?require('./sendNotify') : '';
