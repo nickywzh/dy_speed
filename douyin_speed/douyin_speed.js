@@ -2,8 +2,7 @@ const $ = new Env('🍅抖音极速版')
 const notify = $.isNode() ? require('./sendNotify') : '';
 let status, no;
 status = (status = ($.getval("xdystatus") || "1")) > 1 ? `${status}` : ""; // 账号扩展字符
-const dyurlArr = [], dybxurlArr = [], dycookieArr = [], dytokenArr = [],
-    dyuaArr = [], dyxsscookieArr = []
+const dyurlArr = [], dycookieArr = [], dytokenArr = []
 
 let dyurl = $.getdata('dyurl')
 let dycookie = $.getdata('dycookie')
@@ -80,12 +79,9 @@ async function watchAdVideo() {
                 'Accept-Encoding': `gzip, deflate`,
                 'Connection': `keep-alive`,
             },
-            body: `{
-                    "task_key": "excitation_ad",
-                    "rit": "28038",
-                    "creator_id": "12315000"
-                    }`,
+            body: `{"task_key": "excitation_ad","rit": "28038","creator_id": "12315000"}`,
         }
+        console.log(adUrl)
         $.post(adUrl, async (error, response, data) => {
             try {
                 if (error) {
@@ -94,6 +90,7 @@ async function watchAdVideo() {
                     $.logErr(error);
                 } else {
                     const result = JSON.parse(data)
+                    console.log(result)
                     if (logs) $.log(data)
                     if (result.err_no == 0) {
                         console.log("看视频奖励金币" + result.err_tips + '获得' + result.data.amount + '🍅')
