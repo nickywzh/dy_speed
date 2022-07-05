@@ -102,13 +102,13 @@ async function watchAdVideo() {
                     $.logErr(error);
                 } else {
                     const result = JSON.parse(data)
-                    console.log(result)
+                    console.log("看视频奖励金币 "+result)
                     if (logs) $.log(data)
                     if (result.err_no === 0) {
                         message += "看视频奖励金币" + result.err_tips + '获得' + result.data.amount + '🍅\n'
 
                     } else {
-                        message += '"看视频奖励金币"：' + result.err_tips + '\n' + result.err_tips;
+                        message += '"看视频奖励金币"：' + result.err_tips + '\n';
                         note = '\n温馨提示⏰：请稍后再试'
                     }
                 }
@@ -126,9 +126,9 @@ async function watchAdVideo() {
 async function signIn() {
     return new Promise((resolve) => {
         let options = {
-            url: `https://${dyhost}/luckycat/aweme/v1/task/done/sign_in?${dyboxurl}`,
+            url: `https://api5-normal-c-hl.amemv.com/luckycat/aweme/v1/task/done/sign_in?${dyboxurl}`,
             headers: {
-                "Host": `${dyhost}`,
+                "Host": `api5-normal-c-hl.amemv.com`,
                 'x-Tt-Token': `${dytoken}`,
                 "Cookie": `${dycookie}`,
                 'User-Agent': `${dyua}`,
@@ -146,14 +146,14 @@ async function signIn() {
                     $.logErr(error);
                 } else {
                     const result = JSON.parse(data)
+                    const title = "签到" + result;
                     console.log(result)
-                    const title = "签到";
                     if (logs) $.log(data)
                     if (result.err_no === 0) {
-                        message += title+"::" + result.err_tips;
+                        message += title+"::" + result.err_tips+"\n";
 
                     } else {
-                        message += title+"::" + result.err_tips ;
+                        message += title+"::" + result.err_tips+"\n" ;
                         note = '\n温馨提示⏰：请稍后再试'
                     }
                 }
@@ -171,9 +171,9 @@ async function signIn() {
 async function signInAdVideo() {
     return new Promise((resolve) => {
         let options = {
-            url: `https://${dyhost}/luckycat/aweme/v1/task/done/excitation_ad_signin?${dyboxurl}`,
+            url: `https://api5-normal-c-hl.amemv.com/luckycat/aweme/v1/task/done/excitation_ad_signin?${dyboxurl}`,
             headers: {
-                "Host": `${dyhost}`,
+                "Host": `api5-normal-c-hl.amemv.com`,
                 'x-Tt-Token': `${dytoken}`,
                 "Cookie": `${dycookie}`,
                 'User-Agent': `${dyua}`,
@@ -191,14 +191,14 @@ async function signInAdVideo() {
                     $.logErr(error);
                 } else {
                     const result = JSON.parse(data)
+                    const title = "签到视频" + result;
                     console.log(result)
-                    const title = "签到视频";
                     if (logs) $.log(data)
                     if (result.err_no === 0) {
-                        message += title+"::" + result.err_tips;
+                        message += title+"::" + result.err_tips+"\n";
 
                     } else {
-                        message += title+"::" + result.err_tips ;
+                        message += title+"::" + result.err_tips +"\n";
                         note = '\n温馨提示⏰：请稍后再试'
                     }
                 }
@@ -214,9 +214,9 @@ async function signInAdVideo() {
 async function watchTreasureBoxVideo() {
     return new Promise((resolve) => {
         let options = {
-            url: `https://${dyhost}/luckycat/aweme/v1/task/done/excitation_ad/one_more?${dyboxurl}`,
+            url: `https://api5-normal-c-hl.amemv.com/luckycat/aweme/v1/task/done/excitation_ad/one_more?${dyboxurl}`,
             headers: {
-                "Host": `${dyhost}`,
+                "Host": `api5-normal-c-hl.amemv.com`,
                 'x-Tt-Token': `${dytoken}`,
                 "Cookie": `${dycookie}`,
                 'User-Agent': `${dyua}`,
@@ -234,8 +234,8 @@ async function watchTreasureBoxVideo() {
                     $.logErr(error);
                 } else {
                     const result = JSON.parse(data)
+                    const title = "看宝箱视频奖励金币" + result;
                     console.log(result)
-                    const title = "看宝箱视频奖励金币";
                     if (logs) $.log(data)
                     if (result.err_no === 0) {
                         message += title+"::" + result.err_tips + '获得' + result.data.amount + '🍅\n'
@@ -260,9 +260,9 @@ async function watchTreasureBoxVideo() {
 async function browseDouyin() {
     return new Promise((resolve) => {
         let options = {
-            url: `https://${dyhost}/luckycat/aweme/v1/task/done/read?${dyboxurl}`,
+            url: `https://api5-normal-c-hl.amemv.com/luckycat/aweme/v1/task/done/read?${dyboxurl}`,
             headers: {
-                "Host": `${dyhost}`,
+                "Host": `api5-normal-c-hl.amemv.com`,
                 'x-Tt-Token': `${dytoken}`,
                 "Cookie": `${dycookie}`,
                 'User-Agent': `${dyua}`,
@@ -280,14 +280,14 @@ async function browseDouyin() {
                     $.logErr(error);
                 } else {
                     const result = JSON.parse(data)
+                    const title = "刷抖音" + result;
                     console.log(result)
-                    const title = "刷抖音";
                     if (logs) $.log(data)
                     if (result.err_no === 0) {
-                        message += title+"::" + result.err_tips;
+                        message += title+"::" + result.err_tips+"\n";
 
                     } else {
-                        message += title+"::" + result.err_tips ;
+                        message += title+"::" + result.err_tips +"\n";
                         note = '\n温馨提示⏰：请稍后再试'
                     }
                 }
