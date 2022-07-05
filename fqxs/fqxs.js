@@ -19,7 +19,7 @@ hostname = *.snssdk.com
 luckycat/novel/v1/task/sign_in/* url script-request-header fqxs.js
 luckycat/novel/v1/task/done/excitation_ad_treasure_box/* url script-request-header fqxs.js
 */
-const $ = new Env('🍅番茄小说,填我邀请码【7526039278】')
+const $ = new Env('🍅番茄小说')
 const notify = $.isNode() ?require('./sendNotify') : '';
 let status,no;
 status = (status = ($.getval("xfqxsstatus") || "1") ) > 1 ? `${status}` : ""; // 账号扩展字符
