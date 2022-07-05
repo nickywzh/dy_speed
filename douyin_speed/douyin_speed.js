@@ -7,8 +7,9 @@ const dyurlArr = [], dybxurlArr = [], dycookieArr = [], dytokenArr = [],
 
 let dyurl = $.getdata('dyurl')
 let dycookie = $.getdata('dycookie')
-let host = $.getdata('host')
 let dytoken = $.getdata('dytoken')
+
+let dyhost = $.getdata('dyhost')
 let dyua = $.getdata('dyua')
 
 let tz = ($.getval('tz') || '1');//0关闭通知，1默认开启
@@ -36,7 +37,6 @@ if ($.isNode()) {
     dyurlArr.push($.getdata('dyurl'))
     dycookieArr.push($.getdata('dycookie'))
     dytokenArr.push($.getdata('dytoken'))
-    dyuaArr.push($.getdata('dyua'))
 }
 !(async () => {
     if (!dyurlArr[0]) {
@@ -55,7 +55,6 @@ if ($.isNode()) {
             dyurl = dyurlArr[i];
             dycookie = dycookieArr[i];
             dytoken = dytokenArr[i];
-            dyua = dyuaArr[i];
             $.index = i + 1;
             await $.wait(1000)
             console.log(`\n开始【账号${$.index}】`)
@@ -71,17 +70,13 @@ if ($.isNode()) {
 //广告
 async function watchAdVideo() {
     return new Promise((resolve) => {
-        let token = dytoken
-        let cookie = dycookie
-        let hosts = host
-        let ua = dyua
         let adUrl = {
-            url: `https://${host}/luckycat/aweme/v1/task/done/excitation_ad/one_more?${dyurl}`,
+            url: `https://${dyhost}/luckycat/aweme/v1/task/done/excitation_ad/one_more?${dyurl}`,
             headers: {
-                'x-Tt-Token': `${token}`,
-                'Cookie': `${cookie}`,
-                'Host': `${hosts}`,
-                'User-Agent': `${ua}`,
+                'x-Tt-Token': `${dytoken}`,
+                'Cookie': `${dycookie}`,
+                'Host': `${dyhost}`,
+                'User-Agent': `${dyua}`,
                 'Accept-Encoding': `gzip, deflate`,
                 'Connection': `keep-alive`,
             },
@@ -101,7 +96,6 @@ async function watchAdVideo() {
                     const result = JSON.parse(data)
                     if (logs) $.log(data)
                     if (result.err_no == 0) {
-                        let content = result.amount.content;
                         console.log("看视频奖励金币" + result.err_tips + '获得' + result.data.amount + '🍅')
                         message += "看视频奖励金币" + result.err_tips + '获得' + result.data.amount + '🍅\n'
 
