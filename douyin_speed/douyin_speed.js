@@ -5,6 +5,7 @@ status = (status = ($.getval("xdystatus") || "1")) > 1 ? `${status}` : ""; // �
 const dyurlArr = [], dycookieArr = [], dytokenArr = []
 
 let dyurl = $.getdata('dyurl')
+let dyboxurl = $.getdata('dyboxurl')
 let dycookie = $.getdata('dycookie')
 let dytoken = $.getdata('dytoken')
 
@@ -46,7 +47,8 @@ if ($.isNode()) {
             8 * 60 * 60 * 1000
         ).toLocaleString()} ===============================================\n`);
 
-    await $.wait(1000);
+    await watchTreasureBoxVideo()
+    await $.wait(5000);
     await watchAdVideo();
     await showmsg();
 })()
@@ -69,7 +71,6 @@ async function watchAdVideo() {
             },
             body: JSON.stringify({"task_key":"excitation_ad","rit":"28038","creator_id":"12315000"})
         }
-        console.log(options)
         $.post(options, async (error, response, data) => {
             try {
                 if (error) {
@@ -81,11 +82,9 @@ async function watchAdVideo() {
                     console.log(result)
                     if (logs) $.log(data)
                     if (result.err_no === 0) {
-                        console.log("看视频奖励金币" + result.err_tips + '获得' + result.data.amount + '🍅')
                         message += "看视频奖励金币" + result.err_tips + '获得' + result.data.amount + '🍅\n'
 
                     } else {
-                        console.log('看视频奖励金币：' + result.err_tips)
                         message += '"看视频奖励金币"：' + result.err_tips + '\n' + result.err_tips;
                         note = '\n温馨提示⏰：请稍后再试'
                     }
@@ -99,6 +98,49 @@ async function watchAdVideo() {
     })
 }
 
+
+async function watchTreasureBoxVideo() {
+    return new Promise((resolve) => {
+        let options = {
+            url: `https://${dyhost}/luckycat/aweme/v1/task/done/excitation_ad/one_more?${dyboxurl}`,
+            headers: {
+                "Host": `${dyhost}`,
+                'x-Tt-Token': `${dytoken}`,
+                "Cookie": `${dycookie}`,
+                'User-Agent': `${dyua}`,
+                'Accept-Encoding': "gzip, deflate",
+                "Connection": "keep-alive",
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({"task_key":"excitation_ad_treasure_box","rit":"28038","creator_id":"12317000"})
+        }
+        $.post(options, async (error, response, data) => {
+            try {
+                if (error) {
+                    console.log("⛔️API查询请求失败❌ ‼️‼️");
+                    console.log(JSON.stringify(error));
+                    $.logErr(error);
+                } else {
+                    const result = JSON.parse(data)
+                    console.log(result)
+                    const title = "看宝箱视频奖励金币";
+                    if (logs) $.log(data)
+                    if (result.err_no === 0) {
+                        message += title+"::" + result.err_tips + '获得' + result.data.amount + '🍅\n'
+
+                    } else {
+                        message += title+"::" + result.err_tips + '\n' + result.err_tips;
+                        note = '\n温馨提示⏰：请稍后再试'
+                    }
+                }
+            } catch (e) {
+                $.logErr(e, response);
+            } finally {
+                resolve();
+            }
+        })
+    })
+}
 
 //showmsg
 async function showmsg() {
