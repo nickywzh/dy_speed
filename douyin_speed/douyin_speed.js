@@ -57,16 +57,17 @@ if ($.isNode()) {
 async function watchAdVideo() {
     return new Promise((resolve) => {
         let options = {
-            "url": "https://aweme.snssdk.com/luckycat/aweme/v1/task/done/excitation_ad/one_more?${dyurl}",
-            "headers": {
-                "Host": `aweme.snssdk.com`,
+            url: `https://${dyhost}/luckycat/aweme/v1/task/done/excitation_ad/one_more?${dyurl}`,
+            headers: {
+                "Host": `${dyhost}`,
                 'x-Tt-Token': `${dytoken}`,
                 "Cookie": `${dycookie}`,
-                'User-Agent': `okhttp/3.10.0.1`,
-                'Accept-Encoding': `gzip, deflate`,
-                "Connection": `keep-alive`,
+                'User-Agent': `${dyua}`,
+                'Accept-Encoding': "gzip, deflate",
+                "Connection": "keep-alive",
+                'Content-Type': 'application/json',
             },
-            "body": JSON.stringify({"creator_id":"12315000","rit":"28038","task_key":"excitation_ad"})
+            body: JSON.stringify({"task_key":"excitation_ad","rit":"28038","creator_id":"12315000"})
         }
         console.log(options)
         $.post(options, async (error, response, data) => {
