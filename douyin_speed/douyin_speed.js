@@ -53,23 +53,27 @@ if ($.isNode()) {
     .catch((e) => $.logErr(e))
     .finally(() => $.done())
 
-//广告
+//ad
 async function watchAdVideo() {
     return new Promise((resolve) => {
-        let adUrl = {
-            url: `https://${dyhost}/luckycat/aweme/v1/task/done/excitation_ad/one_more?${dyurl}`,
+        let ad_url = {
+            url: `https://aweme.snssdk.com/luckycat/aweme/v1/task/done/excitation_ad/one_more??${dyurl}`,
             headers: {
+                'Host': `aweme.snssdk.com`,
                 'x-Tt-Token': `${dytoken}`,
                 'Cookie': `${dycookie}`,
-                'Host': `${dyhost}`,
-                'User-Agent': `${dyua}`,
+                'User-Agent': `okhttp/3.10.0.1`,
                 'Accept-Encoding': `gzip, deflate`,
                 'Connection': `keep-alive`,
             },
-            body: `{"task_key": "excitation_ad","rit": "28038","creator_id": "12315000"}`,
+
+            body: `{
+                      "creator_id" : 12315000,
+                      "rit" : 28038,
+                      "task_key" : "excitation_ad"
+                    }`,
         }
-        console.log(adUrl)
-        $.post(adUrl, async (error, response, data) => {
+        $.post(ad_url, async (error, response, data) => {
             try {
                 if (error) {
                     console.log("⛔️API查询请求失败❌ ‼️‼️");
@@ -79,7 +83,7 @@ async function watchAdVideo() {
                     const result = JSON.parse(data)
                     console.log(result)
                     if (logs) $.log(data)
-                    if (result.err_no == 0) {
+                    if (result.err_no === 0) {
                         console.log("看视频奖励金币" + result.err_tips + '获得' + result.data.amount + '🍅')
                         message += "看视频奖励金币" + result.err_tips + '获得' + result.data.amount + '🍅\n'
 
