@@ -26,10 +26,11 @@ if ($.isNode()) {
     minute = (new Date()).getMinutes();
 }
 if ($.isNode()) {
-    if (process.env.dyURL && process.env.dyURL.indexOf('#') > -1) {
-        dyurl = process.env.dyURL.split('#');
-        console.log(`您选择的是用"#"隔开\n`)
-    }
+    dyurl = process.env.dyurl
+    dycookie = process.env.dycookie
+    dytoken = process.env.dytoken
+    dyua = process.env.dyua
+    dyhost = process.env.dyhost
     console.log(`============ 脚本执行-国际标准时间(UTC)：${new Date().toLocaleString()}  =============\n`)
     console.log(`============ 脚本执行-北京时间(UTC+8)：${new Date(new Date().getTime() + 8 * 60 * 60 * 1000).toLocaleString()}  =============\n`)
 } else {
@@ -48,19 +49,9 @@ if ($.isNode()) {
             new Date().getTimezoneOffset() * 60 * 1000 +
             8 * 60 * 60 * 1000
         ).toLocaleString()} ===============================================\n`);
-    console.log(`------------- 共${dyurlArr.length}个账号----------------\n`)
-    for (let i = 0; i < dyurlArr.length; i++) {
-        if (dyurlArr[i]) {
-            dyurl = dyurlArr[i];
-            dycookie = dycookieArr[i];
-            dytoken = dytokenArr[i];
-            $.index = i + 1;
-            await $.wait(1000)
-            console.log(`\n开始【账号${$.index}】`)
-            await $.wait(1000);
-            await watchAdVideo();
-        }
-    }
+
+    await $.wait(1000);
+    await watchAdVideo();
     await showmsg();
 })()
     .catch((e) => $.logErr(e))
