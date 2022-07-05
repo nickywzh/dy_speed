@@ -39,10 +39,6 @@ if ($.isNode()) {
     dytokenArr.push($.getdata('dytoken'))
 }
 !(async () => {
-    if (!dyurlArr[0]) {
-        $.msg($.name, '【提示】请先获取🍅一cookie')
-        return;
-    }
     console.log(
         `\n\n=============================================== 脚本执行 - 北京时间(UTC+8)：${new Date(
             new Date().getTime() +
