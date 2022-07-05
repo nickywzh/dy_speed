@@ -47,11 +47,27 @@ if ($.isNode()) {
             8 * 60 * 60 * 1000
         ).toLocaleString()} ===============================================\n`);
 
+    // 签到
     await signIn()
     await $.wait(1000);
+    // 签到视频
+    await signInAdVideo()
+    await $.wait(1000);
+    // 宝箱视频
     await watchTreasureBoxVideo()
     await $.wait(5000);
+    // 看广告赚金币
     await watchAdVideo();
+    await $.wait(5000);
+    // 刷5次抖音
+    for (let i = 0; i < 5; i++) {
+        await browseDouyin();
+        await $.wait(5000);
+    }
+    // TODO: 看小说赚金币
+    // TODO: 直播开宝箱
+    // TODO: 逛街赚金币
+    // TODO: 吃饭补贴
     await showmsg();
 })()
     .catch((e) => $.logErr(e))
@@ -101,12 +117,13 @@ async function watchAdVideo() {
 }
 
 
+// 签到
 async function signIn() {
     return new Promise((resolve) => {
         let options = {
-            url: `https://api5-normal-c-hl.amemv.com/luckycat/aweme/v1/task/done/sign_in?${dyboxurl}`,
+            url: `https://${dyhost}/luckycat/aweme/v1/task/done/sign_in?${dyboxurl}`,
             headers: {
-                "Host": `api5-normal-c-hl.amemv.com`,
+                "Host": `${dyhost}`,
                 'x-Tt-Token': `${dytoken}`,
                 "Cookie": `${dycookie}`,
                 'User-Agent': `${dyua}`,
@@ -125,7 +142,52 @@ async function signIn() {
                 } else {
                     const result = JSON.parse(data)
                     console.log(result)
-                    const title = "抖音极速版签到";
+                    const title = "签到";
+                    if (logs) $.log(data)
+                    if (result.err_no === 0) {
+                        message += title+"::" + result.err_tips;
+
+                    } else {
+                        message += title+"::" + result.err_tips ;
+                        note = '\n温馨提示⏰：请稍后再试'
+                    }
+                }
+            } catch (e) {
+                $.logErr(e, response);
+            } finally {
+                resolve();
+            }
+        })
+    })
+}
+
+
+// 签到视频
+async function signInAdVideo() {
+    return new Promise((resolve) => {
+        let options = {
+            url: `https://${dyhost}/luckycat/aweme/v1/task/done/excitation_ad_signin?${dyboxurl}`,
+            headers: {
+                "Host": `${dyhost}`,
+                'x-Tt-Token': `${dytoken}`,
+                "Cookie": `${dycookie}`,
+                'User-Agent': `${dyua}`,
+                'Accept-Encoding': "gzip, deflate",
+                "Connection": "keep-alive",
+                'Content-Type': 'application/json',
+            },
+            body: '{}'
+        }
+        $.post(options, async (error, response, data) => {
+            try {
+                if (error) {
+                    console.log("⛔️API查询请求失败❌ ‼️‼️");
+                    console.log(JSON.stringify(error));
+                    $.logErr(error);
+                } else {
+                    const result = JSON.parse(data)
+                    console.log(result)
+                    const title = "签到视频";
                     if (logs) $.log(data)
                     if (result.err_no === 0) {
                         message += title+"::" + result.err_tips;
@@ -186,6 +248,53 @@ async function watchTreasureBoxVideo() {
         })
     })
 }
+
+
+
+// 刷视频
+async function browseDouyin() {
+    return new Promise((resolve) => {
+        let options = {
+            url: `https://${dyhost}/luckycat/aweme/v1/task/done/read?${dyboxurl}`,
+            headers: {
+                "Host": `${dyhost}`,
+                'x-Tt-Token': `${dytoken}`,
+                "Cookie": `${dycookie}`,
+                'User-Agent': `${dyua}`,
+                'Accept-Encoding': "gzip, deflate",
+                "Connection": "keep-alive",
+                'Content-Type': 'application/json',
+            },
+            body: '{}'
+        }
+        $.post(options, async (error, response, data) => {
+            try {
+                if (error) {
+                    console.log("⛔️API查询请求失败❌ ‼️‼️");
+                    console.log(JSON.stringify(error));
+                    $.logErr(error);
+                } else {
+                    const result = JSON.parse(data)
+                    console.log(result)
+                    const title = "刷抖音";
+                    if (logs) $.log(data)
+                    if (result.err_no === 0) {
+                        message += title+"::" + result.err_tips;
+
+                    } else {
+                        message += title+"::" + result.err_tips ;
+                        note = '\n温馨提示⏰：请稍后再试'
+                    }
+                }
+            } catch (e) {
+                $.logErr(e, response);
+            } finally {
+                resolve();
+            }
+        })
+    })
+}
+
 
 //showmsg
 async function showmsg() {
