@@ -47,6 +47,8 @@ if ($.isNode()) {
             8 * 60 * 60 * 1000
         ).toLocaleString()} ===============================================\n`);
 
+    await signIn()
+    await $.wait(1000);
     await watchTreasureBoxVideo()
     await $.wait(5000);
     await watchAdVideo();
@@ -98,6 +100,49 @@ async function watchAdVideo() {
     })
 }
 
+
+async function signIn() {
+    return new Promise((resolve) => {
+        let options = {
+            url: `https://api5-normal-c-hl.amemv.com/luckycat/aweme/v1/task/done/sign_in?${dyboxurl}`,
+            headers: {
+                "Host": `api5-normal-c-hl.amemv.com`,
+                'x-Tt-Token': `${dytoken}`,
+                "Cookie": `${dycookie}`,
+                'User-Agent': `${dyua}`,
+                'Accept-Encoding': "gzip, deflate",
+                "Connection": "keep-alive",
+                'Content-Type': 'application/json',
+            },
+            body: '{}'
+        }
+        $.post(options, async (error, response, data) => {
+            try {
+                if (error) {
+                    console.log("⛔️API查询请求失败❌ ‼️‼️");
+                    console.log(JSON.stringify(error));
+                    $.logErr(error);
+                } else {
+                    const result = JSON.parse(data)
+                    console.log(result)
+                    const title = "抖音极速版签到";
+                    if (logs) $.log(data)
+                    if (result.err_no === 0) {
+                        message += title+"::" + result.err_tips;
+
+                    } else {
+                        message += title+"::" + result.err_tips ;
+                        note = '\n温馨提示⏰：请稍后再试'
+                    }
+                }
+            } catch (e) {
+                $.logErr(e, response);
+            } finally {
+                resolve();
+            }
+        })
+    })
+}
 
 async function watchTreasureBoxVideo() {
     return new Promise((resolve) => {
